@@ -1,0 +1,32 @@
+Publicando uma variavel simples:
+  Variavel do playbook: {{ var_do_playbook }}
+  Variavel do inventory: {{ var_do_inventory }}
+
+Publicando uma variavel em loop do Playbook
+
+{% for item in lista_do_playbook %}
+  Minhas cores são: {{ item }}
+{% endfor %}
+
+Publicando uma variavel em loop do Inventario
+
+{% for item in lista_do_inventory %}
+  Marcas de carro: {{ item }}
+{% endfor %}
+
+
+Publicando uma variavel a partir do inventário.
+{{ hostvars[inventory_hostname].datacenter }}
+
+Condicionando uma mensagem caso um determinado host pertença a um grupo
+
+{% if inventory_hostname in groups['remoto']  %}
+Este servidor esta no grupo "LOCAL"
+{% else %}
+Este Servidor esta em outro grupo
+{% endif %}
+
+Publicando a lista de hosts de um grupo hosts
+{% for host in groups['remoto'] %}
+ {{ hostvars[host].inventory_hostname }},
+{% endfor %}

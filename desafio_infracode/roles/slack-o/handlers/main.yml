@@ -1,0 +1,14 @@
+---
+# handlers file for slack-o
+
+- name: "Enable mongodb"
+  systemd:       
+    name: mongodb
+    state: started
+    enabled: yes
+
+- name: "Start slacko-api"
+  systemd:       
+    name: slacko-api.service
+    state: started
+    enabled: yes

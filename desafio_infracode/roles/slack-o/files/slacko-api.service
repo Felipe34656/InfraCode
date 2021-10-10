@@ -1,0 +1,10 @@
+[Unit]
+Description=Slack-o
+
+[Service]
+User=root
+Group=root
+ExecStart=/opt/slacko-api/slacko-api.sh
+
+[Install]
+WantedBy=multi-user.target

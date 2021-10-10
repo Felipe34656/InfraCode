@@ -1,0 +1,54 @@
+---
+# tasks file for slack-o
+
+- name: Git Clone
+  git:
+    repo: https://github.com/LeonardoDG2084/iaac_slacko-api.git
+    dest: /opt
+    separate_git_dir: /opt/ansible-examples.git
+  tags:
+   - clone
+
+- name: Install mongodb
+  apt:       
+    name: mongodb
+    update_cache: yes
+    state: present
+  register: var_mongodb
+  notify:
+    - Enable mongodb
+  tags: 
+    - mongo
+
+- name: Install Requirements
+  pip:
+    requirements: /opt/requeriments.txt
+
+- name: Create Directory slacko-api
+  file:
+    path: "{{ path_api }}"
+    state: directory
+
+- name: Copy Files Main
+  copy:
+    src: "{{ item }}"
+    dest: "{{ path_api }}"
+    mode: '0755'
+    remote_src: yes
+  with_items:
+    - /opt/main.py
+
+- name: Copy Files Template
+  copy:
+    src: templates/slacko-api.sh
+    dest: "{{ path_api }}"
+    mode: '0755'
+
+- name: Start Service
+  copy:
+    src: slacko-api.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+  notify:
+    - Start slacko-api

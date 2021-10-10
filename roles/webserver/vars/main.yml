@@ -1,0 +1,4 @@
+---
+# vars file for webserve
+
+nginx_html: "/var/www/html/index.html"
