@@ -1,0 +1,19 @@
+- hosts: remoto
+  gather_facts: False
+  vars:
+   pacotes:
+      - sysstat
+      - docker
+      - nginx
+
+  tasks:
+  - name: Exibindo variaveis
+    debug: 
+      msg: "{{ item.name }} - {{ item.uid }}"
+    loop:
+      - name: Aluno1
+        uid: 1020
+      - name: Aluno2
+        uid: 1030
+      - name: Aluno3
+        uid: 1040

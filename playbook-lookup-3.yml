@@ -1,0 +1,11 @@
+- hosts: remoto
+  gather_facts: False
+
+  tasks:
+  - name: Exibindo variaveis
+    debug: 
+      msg: "{{ item }}"
+    loop:
+      - nginx
+      - docker
+      - sysstat

@@ -1,0 +1,9 @@
+- hosts: local
+  gather_facts: False
+  vars:
+    turma: ' 3'
+
+  tasks:
+  - name: Exibindo variáveis
+    debug: 
+      msg: "{{ mba }}-{{ turma }}"

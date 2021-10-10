@@ -1,0 +1,11 @@
+- hosts: remoto
+  gather_facts: False
+
+  tasks:
+  - name: Obtendo a data
+    shell: "date -u"
+    register: linux_date
+
+  - name: Exibindo a data
+    debug: 
+      msg: "Data do sistema é {{ linux_date.stdout}}"

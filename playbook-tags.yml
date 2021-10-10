@@ -1,0 +1,12 @@
+- hosts: all
+  gather_facts: False
+  tasks:
+  - name: Bom dia
+    shell: "echo 'Bom dia'"
+    tags:
+      - entrada
+
+  - name: Tchau
+    shell: "echo Tchau"
+    tags:
+      - saida

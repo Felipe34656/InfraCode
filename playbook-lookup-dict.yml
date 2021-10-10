@@ -1,0 +1,16 @@
+- hosts: local
+  gather_facts: False
+  vars:
+    dict: 
+      { 
+      pedro: 'docker', 
+      descricao0: 'execucao de containers',
+      pacote1: 'docker-compose',
+      descricao1: 'compose'
+      }
+
+  tasks:
+  - name: Exibindo variaveis
+    debug: 
+      msg: "Chave é {{ item.key}} e o valor {{item.value}}"
+    with_dict: "{{ dict }}"

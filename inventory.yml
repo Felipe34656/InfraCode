@@ -1,0 +1,22 @@
+all:
+    vars:
+            ansible_user: 'vagrant'
+            ansible_become: 'yes'
+            ansible_become_method: 'sudo'
+            mba: 'impacta'
+            turma: '05/06'
+
+local:
+        vars:
+                var_do_inventory: 'Inv-Var'
+                lista_do_inventory:
+                        - "Fiat"
+                        - "VW"
+                        - "Ford"
+        hosts:
+                10.0.0.10:
+                        datacenter: primario
+remoto:
+        hosts:
+                10.0.0.11:
+                        datacenter: secundario

@@ -1,0 +1,17 @@
+- hosts: remoto
+  gather_facts: False
+
+  tasks:
+   - name: Listando arquivos
+     block:
+      - name: Exibindo um mensagem
+        debug:
+          msg: "Executando normalmente"
+
+      - name: Forcando um erro
+        command: /bin/false
+
+      - name: Task será executada
+        debug:
+          msg: "Essa mensagem sera exibida"
+     ignore_errors: yes

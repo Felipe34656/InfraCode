@@ -1,0 +1,16 @@
+- hosts: remoto
+  gather_facts: False
+
+  vars:
+    var_do_playbook: 'Turma'
+    lista_do_playbook: 
+           -  "Amarelo"
+           -  "Vermelho"
+           -  "Preto"
+
+  tasks:
+
+    - name:
+      template:
+        src: template.j2
+        dest: /tmp/template_impacta.txt

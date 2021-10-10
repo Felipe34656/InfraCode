@@ -1,0 +1,6 @@
+- name: Provisionamento webserver
+  hosts: remoto
+  vars:
+
+  roles:
+   - { role: webserver }

@@ -1,0 +1,63 @@
+- hosts: remoto
+  gather_facts: True
+
+  tasks:
+  - name: System details
+    shell: cat /etc/os-release
+    register: response
+  - debug: msg= "{{ response }}"
+
+  - name: Instalando nginx
+    apt:       
+     name: nginx
+     update_cache: yes
+     state: present
+    register: var_nginx
+    tags: 
+       - Deploy
+            
+  - name: Remove html files
+    file:
+      path: /var/www/html/index.nginx-debian.html
+      state: absent
+
+  - name: Configurando o log separado nginx
+    blockinfile:
+      path: /etc/nginx/sites-available/default              
+      insertafter: "server_name _;"
+      block: |
+              access_log      /var/log/nginx/default.log;
+
+  - name: Create access log to page
+    file:
+       path: /var/log/nginx/default.log
+       state: touch   
+       owner: www-data
+       group: adm
+       mode: 0644
+   
+  - name: Nginx content
+    copy:
+      dest: /var/www/html/index.html
+      content: |
+         <h1> Esta pagina e do servidor: {{ ansible_nodename }} </h1>
+         <p> Esta variavel vem do inventario: {{ var_do_inventory }} </p>
+         <p> Data Atual {{ ansible_date_time.iso8601 }} </p>
+         <p> conteudo da instalacao do nginx: {{ var_nginx }} </p>
+         <p> Conteudo da variavel response: {{ response.stdout }} </p>
+         <p> Conteudo da variavel "Datacenter" do inventario: {{ datacenter }} </p>
+    tags:
+      - deploy    
+    notify: Restart Nginx
+
+  - name: Enable and start nginx service   
+    systemd:
+       state: started   
+       name: nginx
+       enabled: yes
+ 
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

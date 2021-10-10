@@ -1,0 +1,19 @@
+- hosts: remoto
+  gather_facts: False
+  debugger: on_skipped
+
+  tasks:
+   - name: Instalando nginx
+     apt:
+        name: nginx
+        update_cache: yes
+        state: present
+     register: var_nginx
+
+   - name: debug
+     debug:
+       msg: "{{ var_nginx }}"
+
+   - name: condicional
+     shell: "echo OLA > /tmp/arquivo"
+     when: var_nginx.failed == true
